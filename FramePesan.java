@@ -6,16 +6,15 @@
 package tubes;
 
 import java.awt.Frame;
+import java.awt.HeadlessException;
+import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.MessageFormat;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author acer
@@ -23,17 +22,31 @@ import javax.swing.table.DefaultTableModel;
 public class FramePesan extends javax.swing.JFrame {
 public String barang;
 public String harga;
-
+public String tenant;
+public boolean databaru;
     /**
      * Creates new form FramePesan
      */
     public FramePesan() {
         initComponents();
          setExtendedState(Frame.MAXIMIZED_BOTH);
-         this.showtables(this);
-         
+        // tampilkan_data();
+          GetData();
+          databaru=true;
+        
     }
-
+    private void GetData(){ // menampilkan data dari database
+    try {
+        Connection conn =(Connection)tubes.MyConnection.koneksiDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet sql = stm.executeQuery("select * from pesan");
+            Tabelbarang.setModel(DbUtils.resultSetToTableModel(sql));
+    }
+    catch (SQLException | HeadlessException e) {
+    }
+}
+     
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,44 +62,47 @@ public String harga;
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        bakso = new javax.swing.JCheckBox();
-        ayamgeprek = new javax.swing.JCheckBox();
-        ketoprak = new javax.swing.JCheckBox();
-        sotoayam = new javax.swing.JCheckBox();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        fanta = new javax.swing.JCheckBox();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        teh = new javax.swing.JCheckBox();
-        cola = new javax.swing.JCheckBox();
-        jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        air = new javax.swing.JCheckBox();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        fruit = new javax.swing.JCheckBox();
-        jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
         reset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        tabel = new javax.swing.JTextField();
+        Tabelbarang = new javax.swing.JTable();
+        teh = new javax.swing.JButton();
+        totalharga = new javax.swing.JTextField();
+        bakso = new javax.swing.JTextField();
+        hargabakso = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        menu = new javax.swing.JTextField();
+        harga2 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        botol = new javax.swing.JTextField();
+        hargabotol = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        ayam3 = new javax.swing.JTextField();
+        harga4 = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
+        ketoprak = new javax.swing.JTextField();
+        air = new javax.swing.JTextField();
+        coca = new javax.swing.JTextField();
+        fruit = new javax.swing.JTextField();
+        fanta = new javax.swing.JTextField();
+        harga5 = new javax.swing.JTextField();
+        hargaair = new javax.swing.JTextField();
+        hargacola = new javax.swing.JTextField();
+        hargafanta = new javax.swing.JTextField();
+        hargafruit = new javax.swing.JTextField();
+        teh1 = new javax.swing.JButton();
+        teh2 = new javax.swing.JButton();
+        teh3 = new javax.swing.JButton();
+        teh4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,166 +112,58 @@ public String harga;
         jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 50)); // NOI18N
         jLabel1.setText("                              M E N U");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(10, 11, 860, 60);
+        jLabel1.setBounds(130, 11, 740, 60);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/geprek.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(60, 170, 90, 90);
+        jLabel2.setBounds(20, 200, 90, 100);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/ket.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 300, 90, 90);
+        jLabel3.setBounds(10, 330, 90, 90);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/soto.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(40, 470, 110, 90);
+        jLabel4.setBounds(10, 450, 110, 90);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/bakso.jpg"))); // NOI18N
         jLabel5.setText("jLabel5");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 630, 110, 90);
-
-        bakso.setText("Bakso");
-        bakso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                baksoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(bakso);
-        bakso.setBounds(130, 650, 100, 30);
-
-        ayamgeprek.setBackground(new java.awt.Color(255, 255, 255));
-        ayamgeprek.setText("Ayam Geprek");
-        ayamgeprek.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ayamgeprekActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ayamgeprek);
-        ayamgeprek.setBounds(150, 210, 100, 30);
-
-        ketoprak.setText("Ketoprak");
-        ketoprak.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ketoprakActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ketoprak);
-        ketoprak.setBounds(120, 340, 100, 30);
-
-        sotoayam.setText("Soto Ayam");
-        sotoayam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sotoayamActionPerformed(evt);
-            }
-        });
-        jPanel1.add(sotoayam);
-        sotoayam.setBounds(140, 490, 100, 30);
-
-        jLabel6.setText("Rp. 15.000");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(250, 650, 90, 30);
-
-        jLabel7.setText("Rp. 12.000");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(260, 210, 90, 30);
-
-        jLabel8.setText("Rp. 14.000");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(250, 340, 90, 30);
-
-        jLabel9.setText("Rp. 15.000");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(260, 490, 90, 30);
+        jLabel5.setBounds(10, 580, 110, 90);
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/aq.jpg"))); // NOI18N
         jLabel10.setText("jLabel10");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(460, 200, 50, 120);
-
-        fanta.setText("Fanta");
-        fanta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fantaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(fanta);
-        fanta.setBounds(430, 600, 90, 30);
-
-        jLabel11.setText("Rp.5.000");
-        jPanel1.add(jLabel11);
-        jLabel11.setBounds(620, 640, 70, 30);
+        jLabel10.setBounds(220, 260, 50, 120);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/coca.jpg"))); // NOI18N
         jLabel12.setText("jLabel12");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(370, 390, 70, 130);
-
-        teh.setText("Teh Botol");
-        jPanel1.add(teh);
-        teh.setBounds(620, 610, 90, 30);
-
-        cola.setText("Coca-Cola");
-        cola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cola);
-        cola.setBounds(440, 420, 90, 30);
-
-        jLabel13.setText("Rp.4.000");
-        jPanel1.add(jLabel13);
-        jLabel13.setBounds(530, 250, 70, 30);
+        jLabel12.setBounds(210, 410, 70, 130);
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/fan.jpg"))); // NOI18N
         jLabel14.setText("jLabel14");
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(380, 570, 50, 130);
-
-        jLabel15.setText("Rp.5.000");
-        jPanel1.add(jLabel15);
-        jLabel15.setBounds(450, 450, 70, 30);
+        jLabel14.setBounds(220, 580, 50, 130);
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/fru.jpg"))); // NOI18N
         jLabel16.setText("jLabel16");
         jPanel1.add(jLabel16);
-        jLabel16.setBounds(550, 390, 50, 110);
-
-        air.setText("Air Mineral");
-        air.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                airActionPerformed(evt);
-            }
-        });
-        jPanel1.add(air);
-        air.setBounds(520, 210, 90, 30);
-
-        jLabel17.setText("Rp.5.000");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(440, 640, 70, 30);
+        jLabel16.setBounds(370, 410, 50, 110);
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/teh.jpg"))); // NOI18N
         jLabel18.setText("jLabel18");
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(550, 560, 60, 150);
-
-        fruit.setText("Fruit Tea");
-        jPanel1.add(fruit);
-        fruit.setBounds(600, 400, 90, 30);
-
-        jLabel19.setText("Rp.5.000");
-        jPanel1.add(jLabel19);
-        jLabel19.setBounds(610, 440, 70, 30);
+        jLabel18.setBounds(360, 570, 60, 150);
 
         jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 0, 36)); // NOI18N
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tubes/che.jpg"))); // NOI18N
         jLabel21.setText("Selamat Menikmati");
         jPanel1.add(jLabel21);
-        jLabel21.setBounds(810, 550, 440, 180);
+        jLabel21.setBounds(790, 560, 440, 180);
 
         jButton1.setBackground(new java.awt.Color(255, 153, 0));
         jButton1.setText("Cetak Bill");
@@ -265,39 +173,7 @@ public String harga;
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(1090, 470, 100, 40);
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(530, 280, 50, 40);
-
-        jTextField2.setText("  ");
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(200, 240, 50, 40);
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(210, 380, 50, 40);
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(220, 530, 50, 40);
-        jPanel1.add(jTextField5);
-        jTextField5.setBounds(220, 690, 50, 40);
-        jPanel1.add(jTextField6);
-        jTextField6.setBounds(440, 670, 50, 40);
-        jPanel1.add(jTextField7);
-        jTextField7.setBounds(620, 670, 50, 40);
-        jPanel1.add(jTextField8);
-        jTextField8.setBounds(610, 470, 50, 40);
-        jPanel1.add(jTextField9);
-        jTextField9.setBounds(450, 480, 50, 40);
+        jButton1.setBounds(1010, 520, 100, 40);
 
         reset.setBackground(new java.awt.Color(255, 51, 0));
         reset.setText("Reset");
@@ -307,9 +183,9 @@ public String harga;
             }
         });
         jPanel1.add(reset);
-        reset.setBounds(950, 470, 110, 40);
+        reset.setBounds(850, 520, 110, 40);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabelbarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -320,174 +196,693 @@ public String harga;
                 "no", "nama makanan", "harga", "jumlah"
             }
         ));
-        jTable1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        Tabelbarang.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTable1PropertyChange(evt);
+                TabelbarangPropertyChange(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabelbarang);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(700, 130, 480, 200);
+        jScrollPane1.setBounds(830, 190, 390, 270);
 
-        tabel.addActionListener(new java.awt.event.ActionListener() {
+        teh.setText("Order");
+        teh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tabelActionPerformed(evt);
+                tehActionPerformed(evt);
             }
         });
-        jPanel1.add(tabel);
-        tabel.setBounds(700, 360, 480, 80);
+        jPanel1.add(teh);
+        teh.setBounds(440, 660, 61, 23);
+
+        totalharga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalhargaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(totalharga);
+        totalharga.setBounds(1030, 460, 190, 30);
+
+        bakso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        bakso.setText("Bakso");
+        bakso.setCaretColor(new java.awt.Color(255, 255, 255));
+        bakso.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        bakso.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(bakso);
+        bakso.setBounds(120, 570, 80, 30);
+
+        hargabakso.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargabakso.setForeground(new java.awt.Color(0, 0, 102));
+        hargabakso.setText("15000");
+        hargabakso.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargabakso.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargabakso.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargabakso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargabaksoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargabakso);
+        hargabakso.setBounds(120, 600, 80, 19);
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton3.setText("ORDER");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(130, 620, 65, 21);
+
+        menu.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        menu.setText("Ayam Geprek");
+        menu.setCaretColor(new java.awt.Color(255, 255, 255));
+        menu.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        menu.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(menu);
+        menu.setBounds(110, 220, 80, 30);
+
+        harga2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        harga2.setForeground(new java.awt.Color(0, 0, 102));
+        harga2.setText("12000");
+        harga2.setCaretColor(new java.awt.Color(255, 255, 255));
+        harga2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        harga2.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(harga2);
+        harga2.setBounds(110, 250, 80, 19);
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton4.setText("ORDER");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(120, 270, 65, 21);
+
+        botol.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        botol.setText("Teh Botol");
+        botol.setCaretColor(new java.awt.Color(255, 255, 255));
+        botol.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        botol.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(botol);
+        botol.setBounds(430, 610, 80, 30);
+
+        hargabotol.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargabotol.setForeground(new java.awt.Color(0, 0, 102));
+        hargabotol.setText("5000");
+        hargabotol.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargabotol.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargabotol.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargabotol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargabotolActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargabotol);
+        hargabotol.setBounds(430, 640, 80, 19);
+
+        jButton5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton5.setText("ORDER");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5);
+        jButton5.setBounds(120, 390, 65, 21);
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton6.setText("ORDER");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6);
+        jButton6.setBounds(120, 390, 65, 21);
+
+        ayam3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        ayam3.setText("Soto Ayam");
+        ayam3.setCaretColor(new java.awt.Color(255, 255, 255));
+        ayam3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        ayam3.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(ayam3);
+        ayam3.setBounds(110, 440, 80, 30);
+
+        harga4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        harga4.setForeground(new java.awt.Color(0, 0, 102));
+        harga4.setText("15000");
+        harga4.setCaretColor(new java.awt.Color(255, 255, 255));
+        harga4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        harga4.setSelectionColor(new java.awt.Color(255, 255, 255));
+        harga4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                harga4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(harga4);
+        harga4.setBounds(110, 470, 80, 19);
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton7.setText("ORDER");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7);
+        jButton7.setBounds(120, 490, 65, 21);
+
+        ketoprak.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        ketoprak.setText("Ketoprak");
+        ketoprak.setCaretColor(new java.awt.Color(255, 255, 255));
+        ketoprak.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        ketoprak.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(ketoprak);
+        ketoprak.setBounds(110, 340, 80, 30);
+
+        air.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        air.setText("Air Mineral");
+        air.setCaretColor(new java.awt.Color(255, 255, 255));
+        air.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        air.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(air);
+        air.setBounds(270, 280, 80, 30);
+
+        coca.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        coca.setText("Coca-cola");
+        coca.setCaretColor(new java.awt.Color(255, 255, 255));
+        coca.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        coca.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(coca);
+        coca.setBounds(270, 440, 80, 30);
+
+        fruit.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        fruit.setText("Fruit Tea");
+        fruit.setCaretColor(new java.awt.Color(255, 255, 255));
+        fruit.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        fruit.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(fruit);
+        fruit.setBounds(420, 430, 80, 30);
+
+        fanta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        fanta.setText("Fanta");
+        fanta.setCaretColor(new java.awt.Color(255, 255, 255));
+        fanta.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        fanta.setSelectionColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(fanta);
+        fanta.setBounds(280, 610, 80, 30);
+
+        harga5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        harga5.setForeground(new java.awt.Color(0, 0, 102));
+        harga5.setText("14000");
+        harga5.setCaretColor(new java.awt.Color(255, 255, 255));
+        harga5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        harga5.setSelectionColor(new java.awt.Color(255, 255, 255));
+        harga5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                harga5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(harga5);
+        harga5.setBounds(110, 370, 80, 19);
+
+        hargaair.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargaair.setForeground(new java.awt.Color(0, 0, 102));
+        hargaair.setText("4000");
+        hargaair.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargaair.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargaair.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargaair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargaairActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargaair);
+        hargaair.setBounds(270, 310, 80, 19);
+
+        hargacola.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargacola.setForeground(new java.awt.Color(0, 0, 102));
+        hargacola.setText("5000");
+        hargacola.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargacola.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargacola.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargacola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargacolaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargacola);
+        hargacola.setBounds(270, 470, 80, 19);
+
+        hargafanta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargafanta.setForeground(new java.awt.Color(0, 0, 102));
+        hargafanta.setText("5000");
+        hargafanta.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargafanta.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargafanta.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargafanta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargafantaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargafanta);
+        hargafanta.setBounds(280, 640, 80, 19);
+
+        hargafruit.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        hargafruit.setForeground(new java.awt.Color(0, 0, 102));
+        hargafruit.setText("5000");
+        hargafruit.setCaretColor(new java.awt.Color(255, 255, 255));
+        hargafruit.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        hargafruit.setSelectionColor(new java.awt.Color(255, 255, 255));
+        hargafruit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargafruitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hargafruit);
+        hargafruit.setBounds(420, 460, 80, 19);
+
+        teh1.setText("Order");
+        teh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teh1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(teh1);
+        teh1.setBounds(280, 330, 61, 23);
+
+        teh2.setText("Order");
+        teh2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teh2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(teh2);
+        teh2.setBounds(280, 490, 61, 23);
+
+        teh3.setText("Order");
+        teh3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teh3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(teh3);
+        teh3.setBounds(290, 660, 61, 23);
+
+        teh4.setText("Order");
+        teh4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teh4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(teh4);
+        teh4.setBounds(430, 480, 61, 23);
+
+        jButton2.setText("Total");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(940, 470, 57, 23);
+
+        jButton8.setText("Kembali");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton8);
+        jButton8.setBounds(1150, 520, 90, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1250, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ketoprakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ketoprakActionPerformed
-        // TODO add your handling code here:
-        barang="Ketoprak";
-        harga="14000";
-        ketoprak.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_ketoprakActionPerformed
     
-    private void fantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fantaActionPerformed
-        // TODO add your handling code here:
-        barang="Fanta";
-        harga="14000";
-        fanta.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_fantaActionPerformed
-
-    private void colaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colaActionPerformed
-        // TODO add your handling code here:
-        barang="Coca-cola";
-        harga="14000";
-        cola.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_colaActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        /*try{
-        MessageFormat header = new MessageFormat("BKL Kantin");
-        MessageFormat header = new MessageFormat("Page(0,number,integer");
-        jTable1.print(JTable.PrintMode.NORMAL,header,footer);
-        }catch (java.awt.print.PrinterException e){
-            System.err.format("Tidak Bisa print %s%n", e.getMessage());
-        }*/
+        MessageFormat judul= new MessageFormat("Bukit Kantin Lestari");
+        MessageFormat footer= new MessageFormat("Selamat menikmati");
+         //MessageFormat name= new MessageFormat("Nama");
+        //MessageFormat nama= new MessageFormat("SELECT * FROM pembeli");
+       
+        try { 
+        Tabelbarang.print(JTable.PrintMode.FIT_WIDTH, judul,footer);
+        String sql ="DELETE FROM pesan";
+        java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute();
+        JOptionPane.showMessageDialog(null, "Bill akan dprint");
+        databaru=true;   
+    } catch (SQLException | HeadlessException e) {} catch (PrinterException ex) {
+        System.err.print("Error Printer");
+    }
+
+    GetData();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void ayamgeprekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ayamgeprekActionPerformed
-        // TODO add your handling code here:
-        barang="Ayam Geprek";
-        harga="14000";
-        ayamgeprek.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_ayamgeprekActionPerformed
-
-    private void sotoayamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sotoayamActionPerformed
-        // TODO add your handling code here:
-        barang="Soto Ayam";
-        harga="14000";
-        sotoayam.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_sotoayamActionPerformed
-
-    private void baksoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baksoActionPerformed
-        // TODO add your handling code here:
-        barang="Bakso";
-        harga="14000";
-        bakso.setSelected(true);
-        tabel.setText(String.format(barang, tabel));
-        tabel.setText(String.valueOf(harga));
-    }//GEN-LAST:event_baksoActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
-        new selamatdatang().setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_resetActionPerformed
-public void showtables(FramePesan Fr) {
-             int i=0;
-             
-            
-            Object [] rows={"No","Nama Makanan","Harga"};
-            DefaultTableModel dtm=new DefaultTableModel(null,rows){
-               public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false;
-               }
-            };
-          
+         try { 
+      
+             String sql ="DELETE FROM  pesan;";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Reset");
+            databaru=true;  
            
-            Fr.jTable1.setModel(dtm);
-            Fr.jTable1.setBorder(null);
-            Fr.jTable1.removeAll();
-             String query="select * from makanan;";
-        
-        
-        try{
-            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost/kantin_bkl","root","");
-            Statement stat = koneksi.createStatement();
-            ResultSet hasil = stat.executeQuery(query);
-            
-            while(hasil.next()){
-                Object[] obj=new Object[3];
-               
-                obj[0]=hasil.getString("kode_makanan");
-                obj[1]=hasil.getString("nama_makanan");
-                obj[2]=hasil.getString("harga_makanan");
-//                int flag=hasil.getInt("flag");               
-                
-//                mapPegawai.put(i,obj[0]);
-                i++;
-                
-//                if(flag!=0){
-                dtm.addRow(obj);
-             }
+          } catch (SQLException | HeadlessException e)  {
+            System.err.print("Error Printer");
+    }
+         
+         GetData();
+    }//GEN-LAST:event_resetActionPerformed
+
+    private void TabelbarangPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_TabelbarangPropertyChange
+       
+       
+    }//GEN-LAST:event_TabelbarangPropertyChange
+
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+bakso.getText()+"','"+hargabakso.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-        catch (SQLException e){
-            System.out.println("Gagal eksekusi query select");
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+bakso.getText()+"',Harga'"+hargabakso.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-    private void jTable1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable1PropertyChange
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTable1PropertyChange
+    GetData();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void tabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabelActionPerformed
+    private void hargabaksoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargabaksoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabelActionPerformed
+    }//GEN-LAST:event_hargabaksoActionPerformed
 
-    private void airActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_airActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_airActionPerformed
+        if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+menu.getText()+"','"+harga2.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+menu.getText()+"',Harga'"+harga2.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void hargabotolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargabotolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargabotolActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+ketoprak.getText()+"','"+harga5.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+ketoprak.getText()+"',Harga'"+harga5.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void harga4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harga4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_harga4ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+ayam3.getText()+"','"+harga4.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+ayam3.getText()+"',Harga'"+harga4.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void harga5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harga5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_harga5ActionPerformed
+
+    private void hargaairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaairActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargaairActionPerformed
+
+    private void hargacolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargacolaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargacolaActionPerformed
+
+    private void hargafantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargafantaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargafantaActionPerformed
+
+    private void hargafruitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargafruitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargafruitActionPerformed
+
+    private void teh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teh1ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+air.getText()+"','"+hargaair.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+air.getText()+"',Harga'"+hargaair.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_teh1ActionPerformed
+
+    private void teh2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teh2ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+coca.getText()+"','"+hargacola.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+coca.getText()+"',Harga'"+coca.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_teh2ActionPerformed
+
+    private void teh3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teh3ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+fanta.getText()+"','"+hargafanta.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+fanta.getText()+"',Harga'"+hargafanta.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_teh3ActionPerformed
+
+    private void teh4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teh4ActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+fruit.getText()+"','"+hargafruit.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+fruit.getText()+"',Harga'"+hargafruit.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_teh4ActionPerformed
+
+    private void tehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tehActionPerformed
+        // TODO add your handling code here:
+         if (databaru == true) { // prosess simpan atau edit
+        try {
+            String sql = "insert into pesan values('"+botol.getText()+"','"+hargabotol.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } else {
+        try {
+            String sql = "update pesan SET Menu='"+botol.getText()+"',Harga'"+hargabotol.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubes.MyConnection.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "berhasil disimpan");
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    GetData();
+    }//GEN-LAST:event_tehActionPerformed
+
+    private void totalhargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalhargaActionPerformed
+        // TODO add your handling code here:
+      //total();
+   
+    }//GEN-LAST:event_totalhargaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        double harga = 0;
+        int ttl=0;
+        try{
+            int no = 1;
+            String sqll = "SELECT sum(harga_menu)as bayar FROM pesan";
+            Connection koneksi;
+             koneksi = DriverManager.getConnection("jdbc:mysql://localhost/kantin_bkl","root","");
+             java.sql.Statement stat = koneksi.createStatement();
+             java.sql.ResultSet res = stat.executeQuery(sqll);
+             while(res.next()){
+                 harga=res.getDouble(1);
+                 ttl+=harga;
+             }    
+            // totalharga.(bayar);
+        }catch (SQLException e){
+            System.out.println("error" + e.getMessage());
+        }
+   
+          totalharga.setText(Integer.toString((int) harga)); 
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        new selamatdatang().setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -517,57 +912,62 @@ public void showtables(FramePesan Fr) {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FramePesan().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox air;
-    private javax.swing.JCheckBox ayamgeprek;
-    private javax.swing.JCheckBox bakso;
-    private javax.swing.JCheckBox cola;
-    private javax.swing.JCheckBox fanta;
-    private javax.swing.JCheckBox fruit;
+    private javax.swing.JTable Tabelbarang;
+    private javax.swing.JTextField air;
+    private javax.swing.JTextField ayam3;
+    private javax.swing.JTextField bakso;
+    private javax.swing.JTextField botol;
+    private javax.swing.JTextField coca;
+    private javax.swing.JTextField fanta;
+    private javax.swing.JTextField fruit;
+    private javax.swing.JTextField harga2;
+    private javax.swing.JTextField harga4;
+    private javax.swing.JTextField harga5;
+    private javax.swing.JTextField hargaair;
+    private javax.swing.JTextField hargabakso;
+    private javax.swing.JTextField hargabotol;
+    private javax.swing.JTextField hargacola;
+    private javax.swing.JTextField hargafanta;
+    private javax.swing.JTextField hargafruit;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
-    private javax.swing.JCheckBox ketoprak;
+    private javax.swing.JTextField ketoprak;
+    private javax.swing.JTextField menu;
     private javax.swing.JButton reset;
-    private javax.swing.JCheckBox sotoayam;
-    private javax.swing.JTextField tabel;
-    private javax.swing.JCheckBox teh;
+    private javax.swing.JButton teh;
+    private javax.swing.JButton teh1;
+    private javax.swing.JButton teh2;
+    private javax.swing.JButton teh3;
+    private javax.swing.JButton teh4;
+    private javax.swing.JTextField totalharga;
     // End of variables declaration//GEN-END:variables
 }
